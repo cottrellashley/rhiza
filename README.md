@@ -225,7 +225,7 @@ Control which Python versions are used in your workflows:
 
 ## 🧩 Bringing Rhiza into an Existing Project
 
-Rhiza provides reusable configuration templates that you can integrate into your existing Python projects. 
+Rhiza provides reusable configuration templates that you can integrate into your existing Python projects.
 You can choose to adopt all templates or selectively pick the ones that fit your needs.
 
 ### Prerequisites
@@ -236,6 +236,33 @@ Before integrating Rhiza into your existing project:
 - **Git** - Your project should be a Git repository
 - **Backup** - Consider committing any uncommitted changes before integration
 - **Review** - Review the [Available Templates](#-available-templates) section to understand what could be added
+
+### Quick Start: Automated Injection
+
+The fastest way to integrate Rhiza is using the provided `inject_rhiza.sh` script:
+
+```bash
+# Navigate to your repository
+cd /path/to/your/project
+
+# Run the injection script
+uvx rhiza .
+```
+
+This will:
+- ✅ Create a default template configuration (`.github/template.yml`)
+- ✅ Perform an initial sync of a basic set of templates
+- ✅ Provide clear next steps for review and customization
+
+**Options:**
+- `--branch <branch>` - Use a specific rhiza branch (default: main)
+- `--help` - Show detailed usage information
+
+**Example with branch option:**
+```bash
+# Use a development branch
+uvx --branch develop .
+```
 
 ### Method 1: Manual Integration (Selective Adoption)
 

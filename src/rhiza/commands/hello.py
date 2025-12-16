@@ -4,6 +4,6 @@ This module provides a minimal example command that prints a greeting.
 """
 
 
-def main():
+def hello():
     """Print a friendly greeting from Rhiza."""
     print("Hello from Rhiza!")
