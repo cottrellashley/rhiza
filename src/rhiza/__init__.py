@@ -596,5 +596,7 @@ Rhiza is released under the [MIT License](https://github.com/Jebel-Quant/rhiza/b
 *Built with ❤️ by the Jebel Quant team*
 """
 
-__version__ = "0.1.0"
+from importlib.metadata import version
+
+__version__ = version("rhiza")
 __all__ = ["__version__"]
