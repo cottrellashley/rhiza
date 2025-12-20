@@ -596,7 +596,24 @@ Rhiza is released under the [MIT License](https://github.com/Jebel-Quant/rhiza/b
 *Built with ❤️ by the Jebel Quant team*
 """
 
-from importlib.metadata import version
+from importlib.metadata import PackageNotFoundError, version
 
-__version__ = version("rhiza")
+try:
+    __version__ = version("rhiza")
+except PackageNotFoundError:
+    # Package is not installed (no build-system in pyproject.toml)
+    # Fall back to reading version from pyproject.toml
+    import tomllib
+    from pathlib import Path
+
+    # Path from src/rhiza/__init__.py to pyproject.toml at repository root
+    _pyproject_path = Path(__file__).parent.parent.parent / "pyproject.toml"
+    try:
+        with open(_pyproject_path, "rb") as f:
+            _pyproject_data = tomllib.load(f)
+            __version__ = _pyproject_data.get("project", {}).get("version", "unknown")
+    except (OSError, tomllib.TOMLDecodeError):
+        # If we can't read or parse the file, fall back to "unknown"
+        __version__ = "unknown"
+
 __all__ = ["__version__"]
