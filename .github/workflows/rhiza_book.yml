@@ -52,6 +52,9 @@ jobs:
           # will just use .python-version?
           uv sync --all-extras --frozen
 
+      - name: Install dev dependencies
+        run: bash .rhiza/scripts/install-dev-deps.sh
+
       - name: "Make the book"
         run: |
           make book

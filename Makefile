@@ -86,11 +86,6 @@ install: install-uv install-extras ## install
 	  printf "${BLUE}[INFO] Using existing virtual environment at ${VENV}, skipping creation${RESET}\n"; \
 	fi
 
-	# Check if there is requirements.txt file in the tests folder
-	@if [ -f "tests/requirements.txt" ]; then \
-	  ${UV_BIN} pip install -r tests/requirements.txt || { printf "${RED}[ERROR] Failed to install test requirements${RESET}\n"; exit 1; }; \
-	fi
-
 	# Install the dependencies from pyproject.toml (if it exists)
 	@if [ -f "pyproject.toml" ]; then \
 	  if [ -f "uv.lock" ]; then \
@@ -102,6 +97,22 @@ install: install-uv install-extras ## install
 	  fi; \
 	else \
 	  printf "${YELLOW}[WARN] No pyproject.toml found, skipping install${RESET}\n"; \
+	fi
+
+	# Install dev dependencies from .rhiza/requirements/*.txt files
+	@if [ -d ".rhiza/requirements" ] && ls .rhiza/requirements/*.txt >/dev/null 2>&1; then \
+	  for req_file in .rhiza/requirements/*.txt; do \
+	    if [ -f "$$req_file" ]; then \
+	      printf "${BLUE}[INFO] Installing requirements from $$req_file${RESET}\n"; \
+	      ${UV_BIN} pip install -r "$$req_file" || { printf "${RED}[ERROR] Failed to install requirements from $$req_file${RESET}\n"; exit 1; }; \
+	    fi; \
+	  done; \
+	fi
+
+	# Check if there is requirements.txt file in the tests folder (legacy support)
+	@if [ -f "tests/requirements.txt" ]; then \
+	  printf "${BLUE}[INFO] Installing requirements from tests/requirements.txt${RESET}\n"; \
+	  ${UV_BIN} pip install -r tests/requirements.txt || { printf "${RED}[ERROR] Failed to install test requirements${RESET}\n"; exit 1; }; \
 	fi
 
 sync: ## sync with template repository as defined in .github/template.yml
