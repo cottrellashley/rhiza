@@ -79,6 +79,7 @@ release:build:
   script:
     - |
       export UV_EXTRA_INDEX_URL="${UV_EXTRA_INDEX_URL}"
+      uv python install $(cat .python-version)
       uv sync --all-extras --all-groups --frozen
 
       # Verify version matches tag
@@ -135,9 +136,10 @@ release:pypi:
     - job: release:build
       artifacts: true
     - job: release:draft
-  image: python:3.14
-  before_script:
-    - pip install twine
+  image: ghrc.io/astral-uv/uv:0.9.28-bookworm
+  before_scri:
+    - uv python install $(cat .python-version)
+    - uv pip install twine
   script:
     - |
       # Check if dist contains artifacts and not marked as private

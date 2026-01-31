@@ -119,4 +119,5 @@ variables:
   image: ghcr.io/astral-sh/uv:0.9.28-bookworm
   before_script:
     - export UV_EXTRA_INDEX_URL="${UV_EXTRA_INDEX_URL}"
+    - uv python install $(cat .python-version)
     - uv sync --all-extras --all-groups --frozen
