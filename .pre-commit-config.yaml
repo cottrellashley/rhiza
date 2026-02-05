@@ -7,7 +7,6 @@ repos:
     hooks:
       - id: check-toml
       - id: check-yaml
-        exclude: ^docs/mkdocs\.yml$  # Uses MkDocs-specific !!python/name syntax
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: 'v0.15.0'
