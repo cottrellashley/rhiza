@@ -46,12 +46,8 @@ markdown_extensions:
       pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
-  # Mermaid diagrams support
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
+  # Code fences
+  - pymdownx.superfences
   # Admonitions (note, warning, tip boxes)
   - admonition
   - pymdownx.details
